@@ -1,0 +1,11 @@
+{
+  "name": "assignment-portal",
+  "version": "1.0.0",
+  "description": "Assignment submission portal with CI test reporting",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node scripts/run-tests.js",
+    "receiver": "node receiver/receiver.js"
+  },
+  "engines": { "node": ">=20" }
+}

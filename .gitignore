@@ -1,0 +1,5 @@
+node_modules/
+data/
+report-out/
+receiver/testreport.json
+receiver/history/

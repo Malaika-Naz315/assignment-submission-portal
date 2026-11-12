@@ -1,0 +1,65 @@
+name: CI
+
+on: push            # runs on EVERY push to ANY branch
+
+jobs:
+  test:
+    # Self-hosted runner = your own laptop, so "localhost" reaches your receiver.
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run tests and send report to local receiver
+        run: npm test
+        env:
+          RECEIVER_URL: http://localhost:4000/report
+
+      - name: Keep report for email job
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: report-out/
+
+  # BONUS 1: deploy only if ALL tests passed, and only on main
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  # BONUS 2: email the report after passing AND failing runs
+  email:
+    needs: test
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: test-report
+          path: report-out
+      - uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          to: ${{ secrets.EMAIL_TO }}
+          from: DevOps CI <${{ secrets.EMAIL_USERNAME }}>
+          subject: "Test report: ${{ needs.test.result }} - ${{ github.repository }} (${{ github.sha }})"
+          body: file://report-out/summary.txt
+          attachments: report-out/testreport.json
