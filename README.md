@@ -32,4 +32,4 @@ Listens on http://localhost:4000/report and saves each report to `receiver/testr
 
 Secrets needed for email: `EMAIL_USERNAME`, `EMAIL_PASSWORD` (Gmail App Password), `EMAIL_TO`.
 
-Live demo: _paste your GitHub Pages URL here_
+Live demo: https://malaika-naz315.github.io/assignment-submission-portal/
