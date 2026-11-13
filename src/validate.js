@@ -1,6 +1,7 @@
 // All validation rules live here so the server and the tests share them.
 const FIELDS = [
   ['name', 'Student name'],
+  ['regNo', 'Registration number'],
   ['title', 'Assignment title'],
   ['url', 'Submission URL'],
 ];
