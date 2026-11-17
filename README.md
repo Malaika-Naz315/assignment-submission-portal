@@ -31,5 +31,9 @@ Listens on http://localhost:4000/report and saves each report to `receiver/testr
 - Job `email` (bonus) emails the report after passing and failing runs.
 
 Secrets needed for email: `EMAIL_USERNAME`, `EMAIL_PASSWORD` (Gmail App Password), `EMAIL_TO`.
+Github repo:https://malaika-naz315.github.io/assignment-submission-portal/
 
-Live demo: https://malaika-naz315.github.io/assignment-submission-portal/
+## 🎥 Project Demonstration Video
+
+[▶️ Watch Project Demo] 
+https://github.com/Malaika-Naz315/assignment-submission-portal/blob/main/lab-mid%20demo%20video.mp4
